@@ -1,17 +1,29 @@
 package com.varad.base_module;
 
-import com.varad.base_module.BaseView;
-
 /**
- * Created by varad on 07/10/18.
+ * Created by varad on 08/10/18.
  */
-public interface BasePresenter<V extends BaseView> {
+public class BasePresenter<V extends BaseView> implements MvpPresenter<V> {
 
-    void onAttach(V mvpView);
+    private static final String TAG = BasePresenter.class.getSimpleName();
 
-    void onDetach();
+    private V mBaseView;
 
-//    void handleApiError(ANError error);
+    @Override
+    public void onAttach(V baseView) {
+        mBaseView = baseView;
+    }
 
-    void setUserAsLoggedOut();
+    @Override
+    public void onDetach() {
+        mBaseView = null;
+    }
+
+    public V getBaseView() {
+        return mBaseView;
+    }
+
+    public boolean isViewAttached() {
+        return mBaseView != null;
+    }
 }
